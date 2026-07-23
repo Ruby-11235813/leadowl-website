@@ -46,6 +46,7 @@
   .nav-links{display:flex;gap:28px;font-size:.92rem;color:var(--navy);}
   .nav-links a{padding:6px 2px;border-bottom:2px solid transparent;}
   .nav-links a.active,.nav-links a:hover{border-bottom-color:var(--gold);}
+  .nav-toggle,.nav-burger{display:none;}
   .btn{
     display:inline-flex;align-items:center;gap:8px;
     background:var(--navy);color:#fff;border-radius:999px;
@@ -280,6 +281,7 @@
 
   /* ---------- booking ---------- */
   .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;}
+  .plans-2{grid-template-columns:repeat(2,1fr);}
   .plan{
     border:1px solid var(--line);border-radius:var(--radius);padding:36px 30px;
     display:flex;flex-direction:column;background:var(--white);
@@ -322,13 +324,30 @@
     .hero-grid,.why-grid,.detail-block{grid-template-columns:1fr;}
     .detail-block > div:first-child{position:static;}
     .hero h1{font-size:2.5rem;}
-    .plans{grid-template-columns:1fr;}
+    .plans,.plans-2{grid-template-columns:1fr;}
   }
   @media(max-width:640px){
     .cards-4,.ind-grid,.about .values-grid,.steps{grid-template-columns:1fr;}
-    .nav-links{display:none;}
     section{padding:64px 0;}
     .hero{padding:72px 0;}
+    .nav .btn{padding:10px 16px;font-size:.86rem;}
+    .nav-burger{
+      display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+      width:40px;height:40px;margin-left:10px;cursor:pointer;
+    }
+    .nav-burger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:.2s;}
+    .nav-toggle:checked ~ .nav-burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav-toggle:checked ~ .nav-burger span:nth-child(2){opacity:0;}
+    .nav-toggle:checked ~ .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav-links{
+      display:none;position:absolute;top:72px;left:0;right:0;
+      flex-direction:column;gap:0;background:rgba(255,255,255,.98);
+      border-bottom:1px solid var(--line);box-shadow:0 14px 28px rgba(16,42,67,.10);
+      padding:6px 0 10px;
+    }
+    .nav-toggle:checked ~ .nav-links{display:flex;}
+    .nav-links a{padding:13px 28px;font-size:1rem;border-bottom:none;}
+    .nav-links a.active{color:var(--teal);}
   }
 </style>
 </head>
@@ -344,6 +363,7 @@
         <span class="brand-sub">領角鴞資訊</span>
       </span>
     </a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <nav class="nav-links">
       <a class="active" href="#top">首頁</a>
       <a href="#about">關於我們</a>
@@ -351,6 +371,7 @@
       <a href="#booking">預約諮詢</a>
     </nav>
     <a class="btn" href="#booking">預約諮詢 <span class="arrow">→</span></a>
+    <label for="nav-toggle" class="nav-burger" aria-label="開啟選單"><span></span><span></span><span></span></label>
   </div>
 </header>
 
@@ -806,7 +827,7 @@
     <h2>兩種開始的方式</h2>
     <p class="lede" style="margin:0 auto;">想自己導，或讓顧問帶著導——都從 30 分鐘免費諮詢開始。</p>
 
-    <div class="plans" style="text-align:left;grid-template-columns:repeat(2,1fr);max-width:880px;margin-left:auto;margin-right:auto;">
+    <div class="plans plans-2" style="text-align:left;max-width:880px;margin-left:auto;margin-right:auto;">
       <div class="plan">
         <h3>Agent 訂閱</h3>
         <div class="p-time">內部自行導入</div>
@@ -895,5 +916,10 @@
   </div>
 </footer>
 
+<script>
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click',function(){var t=document.getElementById('nav-toggle');if(t)t.checked=false;});
+});
+</script>
 </body>
 </html>
